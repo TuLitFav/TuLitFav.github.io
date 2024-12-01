@@ -1,41 +1,49 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Base de Datos de Personas</title>
+    <title>Gestión de Personas</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <h1>Base de Datos de Personas</h1>
-    </header>
+    <div class="container">
+        <h1>Gestión de Personas</h1>
 
-    <section>
-        <h2>Formulario para agregar persona</h2>
-        <form id="formulario">
-            <input type="text" id="nombre" placeholder="Nombre" required>
-            <input type="text" id="apellido" placeholder="Apellido" required>
-            <input type="date" id="fecha_nacimiento" required>
-            <textarea id="descripcion" placeholder="Descripción adicional" required></textarea>
-            <button type="button" id="guardarBtn">Guardar Persona</button>
-        </form>
-    </section>
+        <!-- Formulario -->
+        <div id="form-section">
+            <div class="form-group">
+                <label for="name">Nombre:</label>
+                <input type="text" id="name" placeholder="Introduce el nombre">
+            </div>
+            <div class="form-group">
+                <label for="surname">Apellido:</label>
+                <input type="text" id="surname" placeholder="Introduce el apellido">
+            </div>
+            <div class="form-group">
+                <label for="dob">Fecha de Nacimiento:</label>
+                <input type="date" id="dob">
+            </div>
+            <div class="form-group">
+                <label for="image">Imagen:</label>
+                <input type="file" id="image" accept="image/*">
+            </div>
+            <div class="form-group">
+                <label for="info">Descripción adicional:</label>
+                <textarea id="info" placeholder="Introduce información adicional"></textarea>
+            </div>
+            <button id="save-btn">Guardar</button>
+        </div>
 
-    <section>
-        <h2>Lista de Personas</h2>
-        <input type="text" id="searchInput" placeholder="Buscar persona..." onkeyup="filtrarPersonas()">
-        <div id="lista-personas"></div>
-    </section>
+        <!-- Buscador -->
+        <div class="search-bar">
+            <input type="text" id="search" placeholder="Buscar por nombre o apellido">
+        </div>
 
-    <section>
-        <h2>Acciones de Persona Seleccionada</h2>
-        <button id="verbalBtn" onclick="darAvisoVerbal()">Aviso Verbal Dado</button>
-        <input type="text" id="motivoAviso" placeholder="Motivo del aviso verbal">
-        <button id="buscarBtn" onclick="ponerEnBusqueda()">En Búsqueda</button>
-        <button id="borrarBtn" onclick="borrarPersona()">Borrar Registro</button>
-    </section>
+        <!-- Lista de personas -->
+        <div class="person-list" id="person-list"></div>
+    </div>
 
-    <script src="main.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
