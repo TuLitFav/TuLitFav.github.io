@@ -133,3 +133,38 @@ displayPeople();
 
 const API_URL = "junction.proxy.rlwy.net"; // Cambia esto por tu URL de Railway
 
+saveBtn.addEventListener('click', async () => {
+    const name = document.getElementById('name').value;
+    const surname = document.getElementById('surname').value;
+    const dob = document.getElementById('dob').value;
+    const info = document.getElementById('info').value;
+    const imageInput = document.getElementById('image');
+    const image = imageInput.files.length ? URL.createObjectURL(imageInput.files[0]) : null;
+
+    if (!name || !surname) {
+        alert('Por favor, completa todos los campos obligatorios.');
+        return;
+    }
+
+    const newPerson = { name, surname, dob, info, image };
+
+    // Hacer POST al backend
+    await fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newPerson),
+    });
+    loadPeople(); // Recargar la lista después de guardar
+});
+
+const loadPeople = async () => {
+    const res = await fetch(API_URL);
+    const people = await res.json();
+    personList.innerHTML = '';
+    people.forEach((person, index) => {
+        personList.appendChild(createPersonCard(person, index));
+    });
+};
+
+// Llama a loadPeople al iniciar la página
+loadPeople();
