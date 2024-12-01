@@ -4,7 +4,97 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Personas</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input, button, textarea, select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        .person-list {
+            margin-top: 20px;
+        }
+
+        .person-card {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #f9f9f9;
+            position: relative;
+        }
+
+        .person-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .person-header h3 {
+            margin: 0;
+        }
+
+        .person-header h3.red {
+            color: red;
+        }
+
+        .person-details {
+            display: none;
+            margin-top: 10px;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .actions textarea {
+            width: calc(100% - 120px);
+        }
+
+        .search-bar {
+            margin-bottom: 20px;
+        }
+
+        .table-summary {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #f2f2f2;
+        }
+
+        .table-summary p {
+            margin: 5px 0;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -25,8 +115,8 @@
                 <input type="date" id="dob">
             </div>
             <div class="form-group">
-                <label for="image">Imagen:</label>
-                <input type="file" id="image" accept="image/*">
+                <label for="address">Dirección:</label>
+                <textarea id="address" placeholder="Introduce la dirección"></textarea>
             </div>
             <div class="form-group">
                 <label for="info">Descripción adicional:</label>
@@ -42,8 +132,112 @@
 
         <!-- Lista de personas -->
         <div class="person-list" id="person-list"></div>
+
+        <!-- Resumen de acciones -->
+        <div class="table-summary" id="summary-section">
+            <p><strong>Total de registros:</strong> <span id="total-people">0</span></p>
+            <p><strong>Sujetos visitados:</strong> <span id="total-visited">0</span></p>
+            <p><strong>Avisos verbales dados:</strong> <span id="total-warnings">0</span></p>
+        </div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        const personList = document.getElementById('person-list');
+        const saveBtn = document.getElementById('save-btn');
+        const search = document.getElementById('search');
+
+        const totalPeopleCount = document.getElementById('total-people');
+        const totalVisitedCount = document.getElementById('total-visited');
+        const totalWarningsCount = document.getElementById('total-warnings');
+
+        const people = [];
+
+        // Actualiza el resumen
+        const updateSummary = () => {
+            totalPeopleCount.textContent = people.length;
+            totalVisitedCount.textContent = people.filter(p => p.visited).length;
+            totalWarningsCount.textContent = people.filter(p => p.warning).length;
+        };
+
+        // Crear un nuevo registro
+        const createPersonCard = (person) => {
+            const card = document.createElement('div');
+            card.className = 'person-card';
+
+            const header = document.createElement('div');
+            header.className = 'person-header';
+
+            const title = document.createElement('h3');
+            title.textContent = `${person.name} ${person.surname}`;
+            if (person.warning || person.search) title.classList.add('red');
+            header.appendChild(title);
+
+            const toggleBtn = document.createElement('button');
+            toggleBtn.textContent = 'Detalles';
+            toggleBtn.addEventListener('click', () => {
+                details.style.display = details.style.display === 'none' ? 'block' : 'none';
+            });
+            header.appendChild(toggleBtn);
+
+            const details = document.createElement('div');
+            details.className = 'person-details';
+            details.innerHTML = `
+                <p><strong>Fecha de Nacimiento:</strong> ${person.dob}</p>
+                <p><strong>Dirección:</strong> ${person.address}</p>
+                <p><strong>Descripción:</strong> ${person.info}</p>
+                <div class="actions">
+                    <button class="visited-btn">Sujeto Vistado</button>
+                    <button class="warning-btn">Aviso Verbal Dado</button>
+                    <textarea placeholder="Motivo del aviso"></textarea>
+                </div>
+            `;
+
+            const visitedBtn = details.querySelector('.visited-btn');
+            visitedBtn.addEventListener('click', () => {
+                person.visited = true;
+                updateSummary();
+            });
+
+            const warningBtn = details.querySelector('.warning-btn');
+            warningBtn.addEventListener('click', () => {
+                person.warning = true;
+                title.classList.add('red');
+                updateSummary();
+            });
+
+            card.appendChild(header);
+            card.appendChild(details);
+            return card;
+        };
+
+        // Guardar un personaje
+        saveBtn.addEventListener('click', () => {
+            const name = document.getElementById('name').value;
+            const surname = document.getElementById('surname').value;
+            const dob = document.getElementById('dob').value;
+            const address = document.getElementById('address').value;
+            const info = document.getElementById('info').value;
+
+            if (!name || !surname) {
+                alert('Por favor, completa los campos obligatorios.');
+                return;
+            }
+
+            const newPerson = { name, surname, dob, address, info, visited: false, warning: false, search: false };
+            people.push(newPerson);
+
+            personList.appendChild(createPersonCard(newPerson));
+            updateSummary();
+        });
+
+        // Búsqueda dinámica
+        search.addEventListener('input', () => {
+            const query = search.value.toLowerCase();
+            Array.from(personList.children).forEach(card => {
+                const title = card.querySelector('h3').textContent.toLowerCase();
+                card.style.display = title.includes(query) ? 'block' : 'none';
+            });
+        });
+    </script>
 </body>
 </html>
