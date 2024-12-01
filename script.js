@@ -71,7 +71,7 @@ const createPersonCard = (person, index) => {
         const password = prompt("Por favor, ingresa la contraseña para borrar este registro:");
 
         // Verificar contraseña (aquí se puede hacer un control más seguro si se necesita)
-        if (password === "tu_contraseña") { // Cambia esto por tu propia contraseña
+        if (password === "ERITARNOT2351") { // Cambia esto por tu propia contraseña
             people.splice(index, 1); // Eliminar la persona del array
             saveToLocalStorage(); // Actualizar LocalStorage
             personList.removeChild(card); // Eliminar la tarjeta de la interfaz
@@ -81,52 +81,4 @@ const createPersonCard = (person, index) => {
     });
 
     card.appendChild(header);
-    card.appendChild(details);
-    return card;
-};
-
-// Guardar persona y agregarla a la lista
-const saveToLocalStorage = () => {
-    localStorage.setItem('people', JSON.stringify(people)); // Guardar los datos en LocalStorage
-    displayPeople(); // Actualizar la vista
-};
-
-// Mostrar todas las personas en la lista
-const displayPeople = () => {
-    personList.innerHTML = ''; // Limpiar lista antes de mostrar
-    people.forEach((person, index) => {
-        personList.appendChild(createPersonCard(person, index));
-    });
-};
-
-// Guardar nueva persona
-saveBtn.addEventListener('click', () => {
-    const name = document.getElementById('name').value;
-    const surname = document.getElementById('surname').value;
-    const dob = document.getElementById('dob').value;
-    const info = document.getElementById('info').value;
-    const imageInput = document.getElementById('image');
-    const image = imageInput.files.length ? URL.createObjectURL(imageInput.files[0]) : null;
-
-    if (!name || !surname) {
-        alert('Por favor, completa todos los campos obligatorios.');
-        return;
-    }
-
-    const newPerson = { name, surname, dob, info, image, warning: false, search: false };
-    people.push(newPerson);
-
-    saveToLocalStorage(); // Guardar en LocalStorage
-});
-
-// Búsqueda dinámica
-search.addEventListener('input', () => {
-    const query = search.value.toLowerCase();
-    Array.from(personList.children).forEach(card => {
-        const title = card.querySelector('h3').textContent.toLowerCase();
-        card.style.display = title.includes(query) ? 'block' : 'none';
-    });
-});
-
-// Al cargar la página, mostrar las personas guardadas
-displayPeople();
+    card.appendChild
