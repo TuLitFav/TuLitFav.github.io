@@ -91,5 +91,50 @@
     </div>
 
     <script src="script.js"></script>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Base de Datos de Personajes</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Base de Datos de Personajes</h1>
+        
+        <div class="form-container">
+            <h2>Agregar Personaje</h2>
+            <form id="characterForm">
+                <label for="firstName">Nombre:</label>
+                <input type="text" id="firstName" required>
+                
+                <label for="lastName">Apellido:</label>
+                <input type="text" id="lastName" required>
+                
+                <label for="basicInfo">Datos Básicos:</label>
+                <textarea id="basicInfo" required></textarea>
+                
+                <label for="imageInput">Agregar Imagen:</label>
+                <input type="file" id="imageInput" accept="image/*">
+                
+                <button type="submit">Agregar Personaje</button>
+            </form>
+        </div>
+
+        <div class="actions">
+            <h2>Acciones</h2>
+            <button id="reportVisited">Reportar como Sujeto Visitado</button>
+            <button id="reportVerbalWarning">Aviso Verbal Dado</button>
+        </div>
+
+        <div class="character-list">
+            <h2>Lista de Personajes</h2>
+            <input type="text" id="searchInput" placeholder="Buscar por nombre..." />
+            <ul id="characterList"></ul>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
