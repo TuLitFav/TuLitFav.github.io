@@ -12,6 +12,12 @@
             <img src="file-L21xAkE1SWgmYAYNrc48K1" alt="Cuerpo Nacional de Policía" class="logo">
         </div>
         <h1>Base de Datos de Personas</h1>
+        <div class="menu">
+            <button id="three-dots">⋮</button>
+            <div id="menu-options" class="hidden">
+                <button id="show-archived">Mostrar Datos Archivados</button>
+            </div>
+        </div>
     </header>
     <main>
         <section class="form-section">
@@ -31,6 +37,8 @@
         </section>
 
         <section class="person-list" id="person-list"></section>
+
+        <section class="archived-list hidden" id="archived-list"></section>
     </main>
 
     <script src="script.js"></script>
