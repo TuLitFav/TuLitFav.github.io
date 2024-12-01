@@ -1,138 +1,95 @@
-// Almacenar personas en localStorage
-function obtenerPersonas() {
-    return JSON.parse(localStorage.getItem('personas')) || [];
-}
+const personList = document.getElementById('person-list');
+const saveBtn = document.getElementById('save-btn');
+const search = document.getElementById('search');
 
-function guardarPersonas(personas) {
-    localStorage.setItem('personas', JSON.stringify(personas));
-}
+const people = [];
 
-// Agregar una persona a la lista
-document.getElementById('guardarBtn').addEventListener('click', function() {
-    const persona = {
-        nombre: document.getElementById('nombre').value,
-        apellido: document.getElementById('apellido').value,
-        fecha_nacimiento: document.getElementById('fecha_nacimiento').value,
-        descripcion: document.getElementById('descripcion').value,
-        estado: 'normal',  // 'normal', 'vistado', 'en-busqueda'
-        id: Date.now(),
-    };
+// Crear un registro de persona
+const createPersonCard = (person) => {
+    const card = document.createElement('div');
+    card.className = 'person-card';
 
-    const personas = obtenerPersonas();
-    personas.push(persona);
-    guardarPersonas(personas);
-    cargarPersonas();
-    document.getElementById('formulario').reset();
-});
+    const header = document.createElement('div');
+    header.className = 'person-header';
 
-// Cargar las personas desde localStorage
-function cargarPersonas() {
-    const personas = obtenerPersonas();
-    const listaPersonas = document.getElementById('lista-personas');
-    listaPersonas.innerHTML = '';
+    const title = document.createElement('h3');
+    title.textContent = `${person.name} ${person.surname}`;
+    if (person.warning) title.classList.add('red');
+    if (person.search) title.classList.add('yellow');
+    header.appendChild(title);
 
-    personas.forEach(persona => {
-        const div = document.createElement('div');
-        div.classList.add('persona');
-        div.classList.add(persona.estado);
-        div.dataset.id = persona.id;
-        div.innerHTML = `
-            <p class="nombre">${persona.nombre} ${persona.apellido}</p>
-            <p>Fecha de nacimiento: ${persona.fecha_nacimiento}</p>
-            <p>${persona.descripcion}</p>
-        `;
-        div.addEventListener('click', function() {
-            seleccionarPersona(persona.id);
-        });
-        listaPersonas.appendChild(div);
+    const toggleBtn = document.createElement('button');
+    toggleBtn.textContent = 'Detalles';
+    toggleBtn.addEventListener('click', () => {
+        details.style.display = details.style.display === 'none' ? 'block' : 'none';
     });
-}
+    header.appendChild(toggleBtn);
 
-// Filtrar personas por nombre
-function filtrarPersonas() {
-    const filtro = document.getElementById('searchInput').value.toLowerCase();
-    const personas = obtenerPersonas();
-    const listaPersonas = document.getElementById('lista-personas');
-    listaPersonas.innerHTML = '';
+    const details = document.createElement('div');
+    details.className = 'person-details';
+    const imagePreview = person.image ? `<img src="${person.image}" alt="Imagen de ${person.name}" class="person-image">` : '';
 
-    personas.filter(persona => persona.nombre.toLowerCase().includes(filtro))
-        .forEach(persona => {
-            const div = document.createElement('div');
-            div.classList.add('persona');
-            div.classList.add(persona.estado);
-            div.dataset.id = persona.id;
-            div.innerHTML = `
-                <p class="nombre">${persona.nombre} ${persona.apellido}</p>
-                <p>Fecha de nacimiento: ${persona.fecha_nacimiento}</p>
-                <p>${persona.descripcion}</p>
-            `;
-            div.addEventListener('click', function() {
-                seleccionarPersona(persona.id);
-            });
-            listaPersonas.appendChild(div);
-        });
-}
+    details.innerHTML = `
+        ${imagePreview}
+        <p><strong>Fecha de Nacimiento:</strong> ${person.dob}</p>
+        <p><strong>Descripción:</strong> ${person.info}</p>
+        <div class="actions">
+            <button class="warning-btn">Aviso Verbal Dado</button>
+            <textarea placeholder="Motivo del aviso"></textarea>
+            <button class="search-btn">En Búsqueda</button>
+        </div>
+    `;
 
-// Seleccionar una persona
-let personaSeleccionada = null;
+    const warningBtn = details.querySelector('.warning-btn');
+    warningBtn.addEventListener('click', () => {
+        person.warning = !person.warning; // Alterna el estado de "aviso verbal"
+        if (person.warning) {
+            title.classList.add('red');
+        } else {
+            title.classList.remove('red');
+        }
+    });
 
-function seleccionarPersona(id) {
-    personaSeleccionada = id;
-    const personas = obtenerPersonas();
-    const persona = personas.find(p => p.id === id);
+    const searchBtn = details.querySelector('.search-btn');
+    searchBtn.addEventListener('click', () => {
+        person.search = !person.search; // Alterna el estado de "en búsqueda"
+        if (person.search) {
+            title.classList.add('yellow');
+        } else {
+            title.classList.remove('yellow');
+        }
+    });
 
-    if (persona) {
-        document.getElementById('motivoAviso').value = '';
-        document.getElementById('verbalBtn').disabled = false;
-        document.getElementById('buscarBtn').disabled = false;
-        document.getElementById('borrarBtn').disabled = false;
-    }
-}
+    card.appendChild(header);
+    card.appendChild(details);
+    return card;
+};
 
-// Dar aviso verbal
-function darAvisoVerbal() {
-    if (!personaSeleccionada) return;
+// Guardar un personaje
+saveBtn.addEventListener('click', () => {
+    const name = document.getElementById('name').value;
+    const surname = document.getElementById('surname').value;
+    const dob = document.getElementById('dob').value;
+    const info = document.getElementById('info').value;
+    const imageInput = document.getElementById('image');
+    const image = imageInput.files.length ? URL.createObjectURL(imageInput.files[0]) : null;
 
-    const personas = obtenerPersonas();
-    const persona = personas.find(p => p.id === personaSeleccionada);
-    const motivo = document.getElementById('motivoAviso').value;
-    if (!motivo) {
-        alert('Por favor, ingresa el motivo del aviso verbal');
+    if (!name || !surname) {
+        alert('Por favor, completa todos los campos obligatorios.');
         return;
     }
 
-    persona.estado = 'vistado';
-    persona.motivoAviso = motivo;
-    guardarPersonas(personas);
-    cargarPersonas();
-}
+    const newPerson = { name, surname, dob, info, image, warning: false, search: false };
+    people.push(newPerson);
 
-// Poner en búsqueda
-function ponerEnBusqueda() {
-    if (!personaSeleccionada) return;
+    personList.appendChild(createPersonCard(newPerson));
+});
 
-    const personas = obtenerPersonas();
-    const persona = personas.find(p => p.id === personaSeleccionada);
-
-    persona.estado = 'en-busqueda';
-    guardarPersonas(personas);
-    cargarPersonas();
-}
-
-// Borrar registro
-function borrarPersona() {
-    if (!personaSeleccionada) return;
-
-    const personas = obtenerPersonas();
-    const filteredPersonas = personas.filter(p => p.id !== personaSeleccionada);
-    guardarPersonas(filteredPersonas);
-    cargarPersonas();
-    document.getElementById('verbalBtn').disabled = true;
-    document.getElementById('buscarBtn').disabled = true;
-    document.getElementById('borrarBtn').disabled = true;
-}
-
-// Cargar personas al inicio
-window.addEventListener('DOMContentLoaded', function() {
-    cargarPersonas();
+// Búsqueda dinámica
+search.addEventListener('input', () => {
+    const query = search.value.toLowerCase();
+    Array.from(personList.children).forEach(card => {
+        const title = card.querySelector('h3').textContent.toLowerCase();
+        card.style.display = title.includes(query) ? 'block' : 'none';
+    });
 });
