@@ -1,65 +1,138 @@
-const saveBtn = document.getElementById('save-btn');
-const personList = document.getElementById('person-list');
-const archivedList = document.getElementById('archived-list');
-const showArchived = document.getElementById('show-archived');
-const threeDotsMenu = document.getElementById('three-dots');
-const menuOptions = document.getElementById('menu-options');
+// Almacenar personas en localStorage
+function obtenerPersonas() {
+    return JSON.parse(localStorage.getItem('personas')) || [];
+}
 
-// Guardar persona en la base de datos
-saveBtn.addEventListener('click', async () => {
-    const name = document.getElementById('name').value;
-    const surname = document.getElementById('surname').value;
-    const dob = document.getElementById('dob').value;
-    const info = document.getElementById('info').value;
-    const image = document.getElementById('image').files[0] ? document.getElementById('image').files[0].name : '';
+function guardarPersonas(personas) {
+    localStorage.setItem('personas', JSON.stringify(personas));
+}
 
-    const person = { name, surname, dob, info, image };
+// Agregar una persona a la lista
+document.getElementById('guardarBtn').addEventListener('click', function() {
+    const persona = {
+        nombre: document.getElementById('nombre').value,
+        apellido: document.getElementById('apellido').value,
+        fecha_nacimiento: document.getElementById('fecha_nacimiento').value,
+        descripcion: document.getElementById('descripcion').value,
+        estado: 'normal',  // 'normal', 'vistado', 'en-busqueda'
+        id: Date.now(),
+    };
 
-    // Enviar los datos al servidor
-    const response = await fetch('http://localhost:3000/personas', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(person)
-    });
-
-    const newPerson = await response.json();
-    showPeople(); // Actualizar la lista de personas
+    const personas = obtenerPersonas();
+    personas.push(persona);
+    guardarPersonas(personas);
+    cargarPersonas();
+    document.getElementById('formulario').reset();
 });
 
-// Mostrar las personas activas
-const showPeople = async () => {
-    const response = await fetch('http://localhost:3000/personas');
-    const people = await response.json();
+// Cargar las personas desde localStorage
+function cargarPersonas() {
+    const personas = obtenerPersonas();
+    const listaPersonas = document.getElementById('lista-personas');
+    listaPersonas.innerHTML = '';
 
-    personList.innerHTML = '';
-    people.forEach(person => {
+    personas.forEach(persona => {
         const div = document.createElement('div');
-        div.classList.add('person-card');
+        div.classList.add('persona');
+        div.classList.add(persona.estado);
+        div.dataset.id = persona.id;
         div.innerHTML = `
-            <h3>${person.name} ${person.surname}</h3>
-            <button class="archive-btn" onclick="archivePerson('${person._id}')">Archivar</button>
+            <p class="nombre">${persona.nombre} ${persona.apellido}</p>
+            <p>Fecha de nacimiento: ${persona.fecha_nacimiento}</p>
+            <p>${persona.descripcion}</p>
         `;
-        personList.appendChild(div);
+        div.addEventListener('click', function() {
+            seleccionarPersona(persona.id);
+        });
+        listaPersonas.appendChild(div);
     });
-};
+}
 
-// Archivar persona
-const archivePerson = async (id) => {
-    const response = await fetch(`http://localhost:3000/archivar/${id}`, { method: 'PATCH' });
-    const archivedPerson = await response.json();
-    showPeople(); // Actualizar la lista de personas activas
-    showArchivedPeople(); // Actualizar la lista de personas archivadas
-};
+// Filtrar personas por nombre
+function filtrarPersonas() {
+    const filtro = document.getElementById('searchInput').value.toLowerCase();
+    const personas = obtenerPersonas();
+    const listaPersonas = document.getElementById('lista-personas');
+    listaPersonas.innerHTML = '';
 
-// Mostrar personas archivadas
-const showArchivedPeople = async () => {
-    const response = await fetch('http://localhost:3000/archivadas');
-    const people = await response.json();
+    personas.filter(persona => persona.nombre.toLowerCase().includes(filtro))
+        .forEach(persona => {
+            const div = document.createElement('div');
+            div.classList.add('persona');
+            div.classList.add(persona.estado);
+            div.dataset.id = persona.id;
+            div.innerHTML = `
+                <p class="nombre">${persona.nombre} ${persona.apellido}</p>
+                <p>Fecha de nacimiento: ${persona.fecha_nacimiento}</p>
+                <p>${persona.descripcion}</p>
+            `;
+            div.addEventListener('click', function() {
+                seleccionarPersona(persona.id);
+            });
+            listaPersonas.appendChild(div);
+        });
+}
 
-    archivedList.innerHTML = '';
-    people.forEach(person => {
-        const div = document.createElement('div');
-        div.classList.add('person-card');
-        div.innerHTML = `<h3>${person.name} ${person.surname} (Archivado)</h3>`;
-        archivedList.appendChild(div);
-    });
+// Seleccionar una persona
+let personaSeleccionada = null;
+
+function seleccionarPersona(id) {
+    personaSeleccionada = id;
+    const personas = obtenerPersonas();
+    const persona = personas.find(p => p.id === id);
+
+    if (persona) {
+        document.getElementById('motivoAviso').value = '';
+        document.getElementById('verbalBtn').disabled = false;
+        document.getElementById('buscarBtn').disabled = false;
+        document.getElementById('borrarBtn').disabled = false;
+    }
+}
+
+// Dar aviso verbal
+function darAvisoVerbal() {
+    if (!personaSeleccionada) return;
+
+    const personas = obtenerPersonas();
+    const persona = personas.find(p => p.id === personaSeleccionada);
+    const motivo = document.getElementById('motivoAviso').value;
+    if (!motivo) {
+        alert('Por favor, ingresa el motivo del aviso verbal');
+        return;
+    }
+
+    persona.estado = 'vistado';
+    persona.motivoAviso = motivo;
+    guardarPersonas(personas);
+    cargarPersonas();
+}
+
+// Poner en búsqueda
+function ponerEnBusqueda() {
+    if (!personaSeleccionada) return;
+
+    const personas = obtenerPersonas();
+    const persona = personas.find(p => p.id === personaSeleccionada);
+
+    persona.estado = 'en-busqueda';
+    guardarPersonas(personas);
+    cargarPersonas();
+}
+
+// Borrar registro
+function borrarPersona() {
+    if (!personaSeleccionada) return;
+
+    const personas = obtenerPersonas();
+    const filteredPersonas = personas.filter(p => p.id !== personaSeleccionada);
+    guardarPersonas(filteredPersonas);
+    cargarPersonas();
+    document.getElementById('verbalBtn').disabled = true;
+    document.getElementById('buscarBtn').disabled = true;
+    document.getElementById('borrarBtn').disabled = true;
+}
+
+// Cargar personas al inicio
+window.addEventListener('DOMContentLoaded', function() {
+    cargarPersonas();
+});
