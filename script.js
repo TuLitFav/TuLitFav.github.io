@@ -130,3 +130,6 @@ search.addEventListener('input', () => {
 
 // Al cargar la página, mostrar las personas guardadas
 displayPeople();
+
+const API_URL = "junction.proxy.rlwy.net"; // Cambia esto por tu URL de Railway
+
