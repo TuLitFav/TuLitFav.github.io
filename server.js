@@ -9,7 +9,7 @@ app.use(express.json());
 app.use(cors());
 
 // Conectar a MongoDB Atlas
-const MONGO_URI = 'mongodb+srv://<username>:<password>@cluster0.mongodb.net/<dbname>?retryWrites=true&w=majority';
+const MONGO_URI = 'mongodb+srv://TuLitFav:<mb9GY6YFkCLVka>@cluster0.brdoh.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
 mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('Conectado a MongoDB'))
     .catch(err => console.error('Error al conectar a MongoDB:', err));
