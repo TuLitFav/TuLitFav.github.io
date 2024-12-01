@@ -1,53 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de Personas</title>
+    <title>Base de Datos de Personas</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <!-- Logo en la parte superior izquierda -->
+    <header>
         <div class="logo-container">
-            <img src="image.png" alt="Cuerpo Nacional de Policía" class="logo">
+            <img src="file-L21xAkE1SWgmYAYNrc48K1" alt="Cuerpo Nacional de Policía" class="logo">
         </div>
+        <h1>Base de Datos de Personas</h1>
+    </header>
+    <main>
+        <section class="form-section">
+            <h2>Registrar Persona</h2>
+            <form id="person-form">
+                <input type="text" id="name" placeholder="Nombre" required>
+                <input type="text" id="surname" placeholder="Apellido" required>
+                <input type="date" id="dob" required>
+                <textarea id="info" placeholder="Descripción breve"></textarea>
+                <input type="file" id="image">
+                <button type="button" id="save-btn">Guardar</button>
+            </form>
+        </section>
 
-        <h1>Gestión de Personas</h1>
+        <section class="search-section">
+            <input type="text" id="search" placeholder="Buscar por nombre...">
+        </section>
 
-        <!-- Formulario -->
-        <div id="form-section">
-            <div class="form-group">
-                <label for="name">Nombre:</label>
-                <input type="text" id="name" placeholder="Introduce el nombre">
-            </div>
-            <div class="form-group">
-                <label for="surname">Apellido:</label>
-                <input type="text" id="surname" placeholder="Introduce el apellido">
-            </div>
-            <div class="form-group">
-                <label for="dob">Fecha de Nacimiento:</label>
-                <input type="date" id="dob">
-            </div>
-            <div class="form-group">
-                <label for="image">Imagen:</label>
-                <input type="file" id="image" accept="image/*">
-            </div>
-            <div class="form-group">
-                <label for="info">Descripción adicional:</label>
-                <textarea id="info" placeholder="Introduce información adicional"></textarea>
-            </div>
-            <button id="save-btn">Guardar</button>
-        </div>
-
-        <!-- Buscador -->
-        <div class="search-bar">
-            <input type="text" id="search" placeholder="Buscar por nombre o apellido">
-        </div>
-
-        <!-- Lista de personas -->
-        <div class="person-list" id="person-list"></div>
-    </div>
+        <section class="person-list" id="person-list"></section>
+    </main>
 
     <script src="script.js"></script>
 </body>
