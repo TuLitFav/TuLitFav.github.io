@@ -16,6 +16,4 @@ document.getElementById('characterForm').addEventListener('submit', function(eve
     if (imageInput) {
         const reader = new FileReader();
         reader.onload = function(e) {
-            const img = document.createElement('img');
-            img.src = e.target.result;
-            img.style.width = '
+            const img = document.create
