@@ -1,177 +1,84 @@
-/* Estilo general del cuerpo */
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
     margin: 0;
-    padding: 0;
-    background-color: #f4f4f9;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
-/* Encabezado con logo */
 header {
-    background-color: #005C8D; /* Azul Corporativo */
+    background-color: #2e3d49;
     color: white;
-    padding: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    padding: 15px 0;
+    text-align: center;
 }
 
 header h1 {
     margin: 0;
 }
 
-.logo-container {
-    display: flex;
-    align-items: center;
+form {
+    background-color: #fff;
+    padding: 20px;
+    margin: 20px 0;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
-.logo {
+form input, form textarea, form button {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+form button {
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #45a049;
+}
+
+#lista-personas {
+    margin-top: 20px;
+}
+
+.persona {
+    background-color: white;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 5px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.persona p {
+    margin: 5px 0;
+}
+
+.persona button {
+    background-color: #ff9800;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.persona button:hover {
+    background-color: #f57c00;
+}
+
+#logo {
     width: 50px;
     height: auto;
-    margin-right: 15px;
-}
-
-.menu {
-    position: relative;
-}
-
-#three-dots {
-    background-color: transparent;
-    border: none;
-    color: white;
-    font-size: 20px;
-    cursor: pointer;
-}
-
-#menu-options {
-    position: absolute;
-    top: 30px;
-    right: 0;
-    background-color: #005C8D;
-    border-radius: 5px;
-    padding: 10px;
-    display: none;
-}
-
-#menu-options button {
-    background-color: transparent;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-}
-
-#menu-options button:hover {
-    background-color: #003F62;
-}
-
-#menu-options {
-    display: none;
-}
-
-.hidden {
-    display: none;
-}
-
-/* Sección del formulario */
-.form-section {
-    padding: 20px;
-    background-color: white;
-    margin: 20px auto;
-    width: 80%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-}
-
-h2 {
-    font-size: 1.5em;
-    margin-bottom: 10px;
-}
-
-input, textarea, button {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    font-size: 1em;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-button {
-    background-color: #005C8D;
-    color: white;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #003F62;
-}
-
-/* Sección de búsqueda */
-.search-section {
-    padding: 10px;
-    background-color: white;
-    margin: 20px auto;
-    width: 80%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-}
-
-.search-section input {
-    width: 100%;
-}
-
-/* Estilo de la lista de personas */
-.person-list {
-    padding: 20px;
-    width: 80%;
-    margin: 0 auto;
-    background-color: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-}
-
-.person-card {
-    margin: 10px 0;
-    padding: 10px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-button.archive-btn {
-    background-color: #ff9f00;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-}
-
-button.archive-btn:hover {
-    background-color: #ff7f00;
-}
-
-button.delete-btn {
-    background-color: #ff4d4d;
-    color: white;
-    padding: 5px 10px;
-    cursor: pointer;
-}
-
-button.delete-btn:hover {
-    background-color: #e60000;
-}
-
-/* Estilo de los datos archivados */
-.archived-list {
-    padding: 20px;
-    width: 80%;
-    margin: 0 auto;
-    background-color: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-}
-
-.archived-list .person-card {
-    background-color: #d3d3d3;
+    margin: 10px;
 }
