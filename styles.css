@@ -46,10 +46,11 @@ button {
     cursor: pointer;
     border-radius: 5px;
     margin-right: 10px;
+    transition: background-color 0.3s; /* Transición suave */
 }
 
 button:hover {
-    background: #45a049;
+    background: #007bff; /* Color azul al pasar el mouse */
 }
 
 .person-list ul {
