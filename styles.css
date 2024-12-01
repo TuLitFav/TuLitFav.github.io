@@ -15,7 +15,7 @@ h1, h2 {
     color: #35424a;
 }
 
-.form-container, .actions, .character-list, .image-upload {
+.form-container, .actions, .character-list {
     background: #ffffff;
     padding: 20px;
     margin: 20px 0;
