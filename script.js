@@ -1,8 +1,6 @@
-let currentCharacter = null; // Variable para almacenar el personaje actual
-
 document.getElementById('characterForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-    
+    event.preventDefault(); // Evita que el formulario se envíe y la página se recargue
+
     const firstName = document.getElementById('firstName').value;
     const lastName = document.getElementById('lastName').value;
     const basicInfo = document.getElementById('basicInfo').value;
@@ -11,10 +9,10 @@ document.getElementById('characterForm').addEventListener('submit', function(eve
     const characterList = document.getElementById('characterList');
     const listItem = document.createElement('li');
     listItem.textContent = `${firstName} ${lastName} - ${basicInfo}`;
-    
+
     // Crear un contenedor para la imagen
     if (imageInput) {
         const reader = new FileReader();
         reader.onload = function(e) {
             const img = document.createElement('img');
-            img.src = e
+            img.src
