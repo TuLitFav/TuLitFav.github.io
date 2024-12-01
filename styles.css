@@ -1,122 +1,145 @@
-/* Estilos generales */
+/* Estilo general del cuerpo */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    background-color: #f4f4f9;
 }
 
-/* Contenedor principal */
-.container {
-    max-width: 900px;
-    margin: auto;
-    padding: 20px;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+/* Encabezado con logo */
+header {
+    background-color: #005C8D; /* Azul Corporativo */
+    color: white;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
-/* Estilo del logo */
+header h1 {
+    margin: 0;
+}
+
 .logo-container {
-    position: absolute;
-    top: 10px;
-    left: 10px;
+    display: flex;
+    align-items: center;
 }
 
 .logo {
-    width: 60px;
+    width: 50px;
     height: auto;
-    display: block;
+    margin-right: 15px;
 }
 
-/* Título principal */
-h1 {
-    text-align: center;
-    margin-top: 80px; /* Espacio para el logo */
-}
-
-/* Estilos del formulario */
-.form-group {
-    margin-bottom: 15px;
-}
-
-label {
-    display: block;
-    margin-bottom: 5px;
-}
-
-input, button, textarea {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-}
-
-button {
-    cursor: pointer;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    font-size: 16px;
-}
-
-button:hover {
-    background-color: #45a049;
-}
-
-/* Estilos del buscador */
-.search-bar {
-    margin-bottom: 20px;
-}
-
-/* Estilos de la lista de personas */
-.person-list {
-    margin-top: 20px;
-}
-
-.person-card {
-    border: 1px solid #ddd;
-    padding: 10px;
-    margin-bottom: 10px;
-    background-color: #f9f9f9;
-    position: relative;
+/* Sección del formulario */
+.form-section {
+    padding: 20px;
+    background-color: white;
+    margin: 20px auto;
+    width: 80%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
 }
 
-.person-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+h2 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+input, textarea, button {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    background-color: #005C8D;
+    color: white;
     cursor: pointer;
 }
 
-.person-header h3 {
-    margin: 0;
+button:hover {
+    background-color: #003F62;
 }
 
-.person-header h3.red {
+/* Sección de búsqueda */
+.search-section {
+    padding: 10px;
+    background-color: white;
+    margin: 20px auto;
+    width: 80%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.search-section input {
+    width: 100%;
+}
+
+/* Estilo de la lista de personas */
+.person-list {
+    padding: 20px;
+    width: 80%;
+    margin: 0 auto;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.person-card {
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.person-card h3 {
+    margin: 0;
+    font-size: 1.2em;
+}
+
+.person-card .person-details {
+    display: none;
+    padding: 10px;
+}
+
+.person-card .actions button {
+    margin-top: 5px;
+    padding: 5px;
+}
+
+.person-card .red {
     color: red;
 }
 
-.person-header h3.yellow {
+.person-card .yellow {
     color: yellow;
 }
 
-.person-details {
-    display: none;
-    margin-top: 10px;
+button.warning-btn {
+    background-color: red;
+    color: white;
 }
 
-.actions {
-    display: flex;
-    gap: 10px;
-    margin-top: 10px;
+button.search-btn {
+    background-color: yellow;
+    color: black;
 }
 
-.person-image {
-    max-width: 100px;
-    max-height: 100px;
-    border: 1px solid #ccc;
-    margin-bottom: 10px;
+button.delete-btn {
+    background-color: #ff4d4d;
+    color: white;
+}
+
+/* Añadir transiciones suaves */
+button, .person-card {
+    transition: all 0.3s ease;
+}
+
+button:hover, .person-card:hover {
+    opacity: 0.9;
 }
