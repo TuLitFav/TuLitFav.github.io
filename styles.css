@@ -31,6 +31,48 @@ header h1 {
     margin-right: 15px;
 }
 
+.menu {
+    position: relative;
+}
+
+#three-dots {
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+#menu-options {
+    position: absolute;
+    top: 30px;
+    right: 0;
+    background-color: #005C8D;
+    border-radius: 5px;
+    padding: 10px;
+    display: none;
+}
+
+#menu-options button {
+    background-color: transparent;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+#menu-options button:hover {
+    background-color: #003F62;
+}
+
+#menu-options {
+    display: none;
+}
+
+.hidden {
+    display: none;
+}
+
 /* Sección del formulario */
 .form-section {
     padding: 20px;
@@ -97,49 +139,39 @@ button:hover {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.person-card h3 {
-    margin: 0;
-    font-size: 1.2em;
-}
-
-.person-card .person-details {
-    display: none;
-    padding: 10px;
-}
-
-.person-card .actions button {
-    margin-top: 5px;
-    padding: 5px;
-}
-
-.person-card .red {
-    color: red;
-}
-
-.person-card .yellow {
-    color: yellow;
-}
-
-button.warning-btn {
-    background-color: red;
+button.archive-btn {
+    background-color: #ff9f00;
     color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
 }
 
-button.search-btn {
-    background-color: yellow;
-    color: black;
+button.archive-btn:hover {
+    background-color: #ff7f00;
 }
 
 button.delete-btn {
     background-color: #ff4d4d;
     color: white;
+    padding: 5px 10px;
+    cursor: pointer;
 }
 
-/* Añadir transiciones suaves */
-button, .person-card {
-    transition: all 0.3s ease;
+button.delete-btn:hover {
+    background-color: #e60000;
 }
 
-button:hover, .person-card:hover {
-    opacity: 0.9;
+/* Estilo de los datos archivados */
+.archived-list {
+    padding: 20px;
+    width: 80%;
+    margin: 0 auto;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.archived-list .person-card {
+    background-color: #d3d3d3;
 }
