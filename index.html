@@ -1,55 +1,35 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro de Personas</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <div class="container">
-        <header>
-            <h1>Sistema de Registro de Personas</h1>
-        </header>
+    <title>Gestión de Personas</title>
+    <style>
+        /* Estilos CSS */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
 
-        <div class="form-container">
-            <h2>Agregar/Editar Persona</h2>
-            <form id="personForm">
-                <input type="hidden" id="personIndex" value="-1">
-                <label for="firstName">Nombre:</label>
-                <input type="text" id="firstName" required>
-                
-                <label for="lastName">Apellido:</label>
-                <input type="text" id="lastName" required>
-                
-                <label for="birthDate">Fecha de Nacimiento:</label>
-                <input type="date" id="birthDate" required>
-                
-                <label for="description">Descripción:</label>
-                <textarea id="description" required></textarea>
-                
-                <button type="submit">Guardar</button>
-                <button type="button" id="cancelButton">Cancelar</button>
-            </form>
-        </div>
+        .container {
+            max-width: 900px;
+            margin: auto;
+        }
 
-        <div class="search-container">
-            <input type="text" id="searchInput" placeholder="Buscar por nombre..." />
-        </div>
+        h1 {
+            text-align: center;
+        }
 
-        <div class="person-list">
-            <h2>Lista de Personas</h2>
-            <ul id="personList"></ul>
-        </div>
+        .form-group {
+            margin-bottom: 15px;
+        }
 
-        <div class="statistics">
-            <h2>Estadísticas</h2>
-            <p>Total de personas registradas: <span id="totalCount">0</span></p>
-            <p>Total de sujetos visitados: <span id="visitedCount">0</span></p>
-            <p>Total de avisos verbales: <span id="verbalWarningCount">0</span></p>
-        </div>
-    </div>
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
 
-    <script src="script.js"></script>
-</body>
-</html>
+        input, button, textarea {
+            width: 100%;
+            padding: 10px;
+            margin
