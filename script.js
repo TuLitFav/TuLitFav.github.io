@@ -131,7 +131,7 @@ search.addEventListener('input', () => {
 // Al cargar la página, mostrar las personas guardadas
 displayPeople();
 
-const API_URL = "junction.proxy.rlwy.net"; // Cambia esto por tu URL de Railway
+const API_URL = "junction.proxy.rlwy.net:53697"; // Cambia esto por tu URL de Railway
 
 saveBtn.addEventListener('click', async () => {
     const name = document.getElementById('name').value;
